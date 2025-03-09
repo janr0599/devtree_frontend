@@ -24,18 +24,17 @@ function RegisterView() {
     const handleRegister = async (formData: RegisterForm) => {
         try {
             const { data } = await axios.post(
-                "http://localhost:4000/auth/register",
+                `${import.meta.env.VITE_BACKEND_URL}/auth/register`,
                 formData
             );
             console.log(data.message);
+            reset();
         } catch (error) {
             console.log(error);
             if (isAxiosError(error)) {
                 console.log(error.response?.data.error);
             }
         }
-
-        reset();
     };
 
     return (
