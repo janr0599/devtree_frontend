@@ -20,11 +20,11 @@ function LoginView() {
 
     const handleLogin = async (formData: LoginForm): Promise<void> => {
         try {
-            const { data } = await api.post<{ message: string }>(
+            const { data } = await api.post<{ token: string }>(
                 "/auth/login",
                 formData
             );
-            toast.success(data.message);
+            localStorage.setItem("AUTH_TOKEN_DEVTREE", data.token);
         } catch (error) {
             console.log(error);
             if (isAxiosError(error)) {
