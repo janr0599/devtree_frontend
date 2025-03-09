@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import axios, { isAxiosError } from "axios";
 import ErrorMessage from "../components/ErrorMessage";
 import { RegisterForm } from "../types";
+import { toast } from "sonner";
 
 function RegisterView() {
     const initialValues: RegisterForm = {
@@ -27,12 +28,16 @@ function RegisterView() {
                 `${import.meta.env.VITE_BACKEND_URL}/auth/register`,
                 formData
             );
-            console.log(data.message);
+            toast.success(data.message, {
+                richColors: true,
+            });
             reset();
         } catch (error) {
             console.log(error);
             if (isAxiosError(error)) {
-                console.log(error.response?.data.error);
+                toast.error(error.response?.data.error, {
+                    richColors: true,
+                });
             }
         }
     };
