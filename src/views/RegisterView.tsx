@@ -33,9 +33,7 @@ function RegisterView() {
         } catch (error) {
             console.log(error);
             if (isAxiosError(error)) {
-                toast.error(error.response?.data.error, {
-                    richColors: true,
-                });
+                toast.error(error.response?.data.error);
             }
         }
     };
