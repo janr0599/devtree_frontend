@@ -1,13 +1,15 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { isAxiosError } from "axios";
+import { toast } from "sonner";
+import { zodResolver } from "@hookform/resolvers/zod";
 import ErrorMessage from "../components/ErrorMessage";
 import type { RegisterForm } from "../types";
-import { toast } from "sonner";
 import api from "../config/axios";
+import { registerSchema } from "../schemas";
 
 function RegisterView() {
-    const initialValues = {
+    const defaultValues: RegisterForm = {
         name: "",
         email: "",
         handle: "",
@@ -17,11 +19,13 @@ function RegisterView() {
 
     const {
         register,
-        watch,
         handleSubmit,
         formState: { errors },
         reset,
-    } = useForm<RegisterForm>({ defaultValues: initialValues });
+    } = useForm<RegisterForm>({
+        defaultValues,
+        resolver: zodResolver(registerSchema),
+    });
 
     const handleRegister = async (formData: RegisterForm): Promise<void> => {
         try {
@@ -60,9 +64,7 @@ function RegisterView() {
                         type="text"
                         placeholder="Tu Nombre"
                         className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
-                        {...register("name", {
-                            required: "El nombre es obligatorio",
-                        })}
+                        {...register("name")}
                     />
                     {errors.name && (
                         <ErrorMessage>{errors.name.message}</ErrorMessage>
@@ -80,13 +82,7 @@ function RegisterView() {
                         type="email"
                         placeholder="Email de Registro"
                         className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
-                        {...register("email", {
-                            required: "El email es obligatorio",
-                            pattern: {
-                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                message: "El email no es valido",
-                            },
-                        })}
+                        {...register("email")}
                     />
                     {errors.email && (
                         <ErrorMessage>{errors.email.message}</ErrorMessage>
@@ -104,9 +100,7 @@ function RegisterView() {
                         type="text"
                         placeholder="Nombre de usuario: sin espacios"
                         className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
-                        {...register("handle", {
-                            required: "El handle es obligatorio",
-                        })}
+                        {...register("handle")}
                     />
                     {errors.handle && (
                         <ErrorMessage>{errors.handle.message}</ErrorMessage>
@@ -124,14 +118,7 @@ function RegisterView() {
                         type="password"
                         placeholder="Password de Registro"
                         className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
-                        {...register("password", {
-                            required: "El password es obligatorio",
-                            minLength: {
-                                value: 8,
-                                message:
-                                    "La contraseña debe tener al menos 8 caracteres",
-                            },
-                        })}
+                        {...register("password")}
                     />
                     {errors.password && (
                         <ErrorMessage>{errors.password.message}</ErrorMessage>
@@ -150,13 +137,7 @@ function RegisterView() {
                         type="password"
                         placeholder="Repetir Password"
                         className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
-                        {...register("password_confirmation", {
-                            required:
-                                "La confirmación de password es obligatoria",
-                            validate: (value) =>
-                                value === watch("password") ||
-                                "La confirmación de password no coincide",
-                        })}
+                        {...register("password_confirmation")}
                     />
                     {errors.password_confirmation && (
                         <ErrorMessage>

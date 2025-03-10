@@ -2,12 +2,14 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
+import { zodResolver } from "@hookform/resolvers/zod";
 import type { LoginForm } from "../types";
 import ErrorMessage from "../components/ErrorMessage";
 import api from "../config/axios";
+import { loginSchema } from "../schemas";
 
 function LoginView() {
-    const initialValues = {
+    const defaultValues: LoginForm = {
         email: "",
         password: "",
     };
@@ -16,7 +18,10 @@ function LoginView() {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<LoginForm>({ defaultValues: initialValues });
+    } = useForm<LoginForm>({
+        defaultValues,
+        resolver: zodResolver(loginSchema),
+    });
 
     const handleLogin = async (formData: LoginForm): Promise<void> => {
         try {
@@ -54,13 +59,7 @@ function LoginView() {
                         type="email"
                         placeholder="Email de Registro"
                         className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
-                        {...register("email", {
-                            required: "El Email es obligatorio",
-                            pattern: {
-                                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                message: "E-mail no válido",
-                            },
-                        })}
+                        {...register("email")}
                     />
                     {errors.email && (
                         <ErrorMessage>{errors.email.message}</ErrorMessage>
@@ -78,9 +77,7 @@ function LoginView() {
                         type="password"
                         placeholder="Password de Registro"
                         className="bg-slate-100 border-none p-3 rounded-lg placeholder-slate-400"
-                        {...register("password", {
-                            required: "El Password es obligatorio",
-                        })}
+                        {...register("password")}
                     />
                     {errors.password && (
                         <ErrorMessage>{errors.password.message}</ErrorMessage>
