@@ -4,7 +4,7 @@ export const baseUserSchema = z.object({
     name: z.string().nonempty("El nombre es obligatorio"),
     email: z
         .string()
-        .nonempty("el email es obligatorio")
+        .nonempty("El email es obligatorio")
         .email("El email es inválido"),
     handle: z.string().nonempty("El handle es obligatorio"),
     password: z
@@ -20,6 +20,12 @@ export const userSchema = baseUserSchema.pick({
 });
 
 export const registerSchema = baseUserSchema
+    .pick({
+        name: true,
+        email: true,
+        handle: true,
+        password: true,
+    })
     .extend({
         password_confirmation: z
             .string()
