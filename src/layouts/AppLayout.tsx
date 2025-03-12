@@ -1,8 +1,22 @@
 import { Link, Outlet } from "react-router-dom";
 import { Toaster } from "sonner";
 import NavigationTabs from "../components/NavigationTabs";
+import { useQuery } from "@tanstack/react-query";
+import { getUser } from "../api/DevTreeApi";
 
 export default function AppLayout() {
+    const { data, isLoading, isError, error } = useQuery({
+        queryKey: ["user"],
+        queryFn: getUser,
+        retry: false,
+        refetchOnWindowFocus: false,
+    });
+
+    console.log(data);
+    console.log(isLoading);
+    console.log(isError);
+    console.log(error?.message);
+
     return (
         <>
             <header className="bg-slate-800 py-5">
