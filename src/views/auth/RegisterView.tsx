@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
-import ErrorMessage from "../components/ErrorMessage";
-import type { RegisterForm } from "../types";
-import api from "../config/axios";
-import { registerSchema } from "../schemas";
+import ErrorMessage from "../../components/ErrorMessage";
+import type { RegisterForm } from "../../types";
+import api from "../../config/axios";
+import { registerSchema } from "../../schemas";
 
 function RegisterView() {
     const defaultValues: RegisterForm = {

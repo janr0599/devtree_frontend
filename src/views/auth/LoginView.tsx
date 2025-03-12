@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { LoginForm } from "../types";
-import ErrorMessage from "../components/ErrorMessage";
-import api from "../config/axios";
-import { loginSchema } from "../schemas";
+import type { LoginForm } from "../../types";
+import ErrorMessage from "../../components/ErrorMessage";
+import api from "../../config/axios";
+import { loginSchema } from "../../schemas";
 
 function LoginView() {
     const defaultValues: LoginForm = {

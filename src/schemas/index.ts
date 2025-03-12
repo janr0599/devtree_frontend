@@ -11,12 +11,14 @@ export const baseUserSchema = z.object({
         .string()
         .nonempty("El password es obligatorio")
         .min(8, "El password debe tener al menos 8 caracteres"),
+    description: z.string().optional(),
 });
 
 export const userSchema = baseUserSchema.pick({
     name: true,
     email: true,
     handle: true,
+    description: true,
 });
 
 export const registerSchema = baseUserSchema
@@ -44,3 +46,8 @@ export const loginSchema = baseUserSchema
     .extend({
         password: z.string().nonempty("El password es obligatorio"),
     });
+
+export const profileSchema = baseUserSchema.pick({
+    handle: true,
+    description: true,
+});
