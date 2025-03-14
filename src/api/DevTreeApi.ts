@@ -1,5 +1,5 @@
 import { isAxiosError } from "axios";
-import type { ProfileForm, ProfilePicture, User } from "../types";
+import type { DevTreeLink, ProfileForm, ProfilePicture, User } from "../types";
 import api from "../config/axios";
 import { userSchema } from "../schemas";
 
@@ -78,4 +78,14 @@ export const uploadProfilePicture = async (
         // Handle any other unexpected errors
         throw new Error("An unexpected error occurred");
     }
+};
+
+export const uploadSocialLinks = async (links: string) => {
+    // Send the updated user data to the API
+    const { data } = await api.post<{ message: string }>("/user/links", {
+        links,
+    });
+
+    // return the received message
+    return data.message;
 };

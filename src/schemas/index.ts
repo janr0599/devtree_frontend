@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { social } from "../data/social";
 
 export const baseUserSchema = z.object({
     name: z.string().nonempty("El nombre es obligatorio"),
@@ -14,6 +13,7 @@ export const baseUserSchema = z.object({
         .min(8, "El password debe tener al menos 8 caracteres"),
     description: z.string().optional(),
     image: z.string().optional(),
+    links: z.string().optional(),
 });
 
 export const userSchema = baseUserSchema.pick({
@@ -22,6 +22,7 @@ export const userSchema = baseUserSchema.pick({
     handle: true,
     description: true,
     image: true,
+    links: true,
 });
 
 export const registerSchema = baseUserSchema
