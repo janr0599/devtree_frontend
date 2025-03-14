@@ -59,7 +59,9 @@ export default function ProfileView() {
             toast.error(error.message);
         },
         onSuccess: (data: ProfilePicture) => {
-            queryClient.invalidateQueries({ queryKey: ["user"] });
+            queryClient.setQueryData(["user"], (prevData: User) => {
+                return { ...prevData, image: data.image };
+            });
             toast.success(data.message);
         },
     });

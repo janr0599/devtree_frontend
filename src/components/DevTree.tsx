@@ -45,10 +45,19 @@ function DevTree({ data }: DevTreeProps) {
                             <Outlet />
                         </div>
                         <div className="w-full md:w-96 bg-slate-800 px-5 py-10 space-y-6">
-                            <img
-                                src={data.image}
-                                alt={`imagen de perfil de ${data.handle}`}
-                            />
+                            <p className="text-4xl text-center text-white">
+                                {data.handle}
+                            </p>
+                            {data.image && (
+                                <img
+                                    className="mx-auto max-w-[250px]"
+                                    src={data.image}
+                                    alt={`imagen de perfil de ${data.handle}`}
+                                />
+                            )}
+                            <p className="text-center text-lg font-black text-white">
+                                {data.description}
+                            </p>
                         </div>
                     </div>
                 </main>
