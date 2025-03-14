@@ -1,5 +1,5 @@
 import { isAxiosError } from "axios";
-import type { DevTreeLink, ProfileForm, ProfilePicture, User } from "../types";
+import type { ProfileForm, ProfilePicture, User } from "../types";
 import api from "../config/axios";
 import { userSchema } from "../schemas";
 

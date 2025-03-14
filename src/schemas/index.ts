@@ -13,7 +13,7 @@ export const baseUserSchema = z.object({
         .min(8, "El password debe tener al menos 8 caracteres"),
     description: z.string().optional(),
     image: z.string().optional(),
-    links: z.string().optional(),
+    links: z.string(),
 });
 
 export const userSchema = baseUserSchema.pick({

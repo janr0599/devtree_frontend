@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { social } from "../data/social.ts";
 import DevTreeInput from "../components/DevTreeInput.tsx";
 import { DevTreeLink, User } from "../types/index.ts";
@@ -12,6 +12,24 @@ function LinkTreeView() {
 
     const queryClient = useQueryClient();
     const user = queryClient.getQueryData<User>(["user"])!;
+
+    useEffect(() => {
+        const updatedData = devTreeLinks.map((item) => {
+            const userLink = JSON.parse(user.links).find(
+                (link: DevTreeLink) => link.name === item.name
+            );
+
+            if (userLink) {
+                return {
+                    ...item,
+                    enabled: userLink.enabled,
+                    url: userLink.url,
+                };
+            }
+            return item;
+        });
+        setDevTreeLinks(updatedData);
+    }, []);
 
     const { mutate } = useMutation({
         mutationFn: uploadSocialLinks,
@@ -44,11 +62,13 @@ function LinkTreeView() {
         name: DevTreeLink["name"],
         url: DevTreeLink["url"]
     ) => {
-        setDevTreeLinks(
-            devTreeLinks.map((item) =>
-                item.name === name ? { ...item, url: url } : item
-            )
+        const updatedLinks = devTreeLinks.map((item) =>
+            item.name === name ? { ...item, url: url } : item
         );
+        setDevTreeLinks(updatedLinks);
+        queryClient.setQueryData(["user"], (prevData: User) => {
+            return { ...prevData, links: JSON.stringify(updatedLinks) };
+        });
     };
 
     return (
@@ -64,7 +84,7 @@ function LinkTreeView() {
                 ))}
                 <button
                     className="bg-cyan-300 p-3 text-lg w-full uppercase text-slate-600 rounded-lg font-bold cursor-pointer hover:bg-cyan-400 transition-colors"
-                    onClick={() => mutate(user.links!)}
+                    onClick={() => mutate(user.links)}
                 >
                     Guardar Cambios
                 </button>
