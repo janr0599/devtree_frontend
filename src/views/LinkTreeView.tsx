@@ -2,15 +2,24 @@ import { useState } from "react";
 import { social } from "../data/social.ts";
 import DevTreeInput from "../components/DevTreeInput.tsx";
 import { DevTreeLink } from "../types/index.ts";
+import { isValidUrl } from "../utils/index.ts";
+import { toast } from "sonner";
 
 function LinkTreeView() {
     const [devTreeLinks, setDevTreeLinks] = useState(social);
 
     const handleEnableLink = (name: DevTreeLink["name"]) => {
         setDevTreeLinks(
-            devTreeLinks.map((item) =>
-                item.name === name ? { ...item, enabled: !item.enabled } : item
-            )
+            devTreeLinks.map((item) => {
+                if (item.name === name) {
+                    if (isValidUrl(item.url)) {
+                        return { ...item, enabled: !item.enabled };
+                    } else {
+                        toast.error("URL no válida");
+                    }
+                }
+                return item;
+            })
         );
     };
 
