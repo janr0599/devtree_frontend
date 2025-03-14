@@ -8,6 +8,7 @@ type DevTreeProps = {
 };
 
 function DevTree({ data }: DevTreeProps) {
+    console.log(data);
     return (
         <>
             <header className="bg-slate-800 py-5">
@@ -43,7 +44,12 @@ function DevTree({ data }: DevTreeProps) {
                         <div className="flex-1 ">
                             <Outlet />
                         </div>
-                        <div className="w-full md:w-96 bg-slate-800 px-5 py-10 space-y-6"></div>
+                        <div className="w-full md:w-96 bg-slate-800 px-5 py-10 space-y-6">
+                            <img
+                                src={data.image}
+                                alt={`imagen de perfil de ${data.handle}`}
+                            />
+                        </div>
                     </div>
                 </main>
             </div>

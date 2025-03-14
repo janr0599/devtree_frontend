@@ -1,11 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { profileSchema } from "../schemas";
-import type { ProfileForm, User } from "../types";
-import ErrorMessage from "../components/ErrorMessage";
-import { updateProfile } from "../api/DevTreeApi";
 import { toast } from "sonner";
+import { profileSchema } from "../schemas";
+import type { ProfileForm, ProfilePicture, User } from "../types";
+import ErrorMessage from "../components/ErrorMessage";
+import { updateProfile, uploadProfilePicture } from "../api/DevTreeApi";
 
 export default function ProfileView() {
     const queryClient = useQueryClient();
@@ -14,6 +14,7 @@ export default function ProfileView() {
     const defaultValues: ProfileForm = {
         handle: data.handle,
         description: data.description,
+        image: data.description,
     };
 
     const {
@@ -34,6 +35,7 @@ export default function ProfileView() {
     const hasChanges =
         JSON.stringify(watchedValues) !== JSON.stringify(defaultValues);
 
+    // Mutation to update the user profile
     const updateProfileMutation = useMutation({
         mutationFn: updateProfile,
         onError: (error: Error) => {
@@ -48,6 +50,24 @@ export default function ProfileView() {
 
     const handleUserProfileForm = (formData: ProfileForm) => {
         updateProfileMutation.mutate(formData);
+    };
+
+    //Mutation to upload profile picture
+    const uploadProfilePictureMutation = useMutation({
+        mutationFn: uploadProfilePicture,
+        onError: (error: Error) => {
+            toast.error(error.message);
+        },
+        onSuccess: (data: ProfilePicture) => {
+            queryClient.invalidateQueries({ queryKey: ["user"] });
+            toast.success(data.message);
+        },
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files) {
+            uploadProfilePictureMutation.mutate(e.target.files[0]);
+        }
     };
 
     return (
@@ -88,7 +108,7 @@ export default function ProfileView() {
                     name="handle"
                     className="border-none bg-slate-100 rounded-lg p-2"
                     accept="image/*"
-                    onChange={() => {}}
+                    onChange={handleChange}
                 />
             </div>
 

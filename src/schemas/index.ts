@@ -12,6 +12,7 @@ export const baseUserSchema = z.object({
         .nonempty("El password es obligatorio")
         .min(8, "El password debe tener al menos 8 caracteres"),
     description: z.string().optional(),
+    image: z.string().optional(),
 });
 
 export const userSchema = baseUserSchema.pick({
@@ -19,6 +20,7 @@ export const userSchema = baseUserSchema.pick({
     email: true,
     handle: true,
     description: true,
+    image: true,
 });
 
 export const registerSchema = baseUserSchema
@@ -50,4 +52,10 @@ export const loginSchema = baseUserSchema
 export const profileSchema = baseUserSchema.pick({
     handle: true,
     description: true,
+    image: true,
+});
+
+export const profilePictureSchema = z.object({
+    image: z.string().url("La imagen no es válida"),
+    message: z.string(),
 });
