@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { social } from "../data/social";
 
 export const baseUserSchema = z.object({
     name: z.string().nonempty("El nombre es obligatorio"),
@@ -58,4 +59,17 @@ export const profileSchema = baseUserSchema.pick({
 export const profilePictureSchema = z.object({
     image: z.string().url("La imagen no es válida"),
     message: z.string(),
+});
+
+export const socialNetworkSchema = z.object({
+    id: z.number(),
+    name: z.string(),
+    url: z.string(),
+    enabled: z.boolean(),
+});
+
+export const devTreeLink = socialNetworkSchema.pick({
+    name: true,
+    url: true,
+    enabled: true,
 });
