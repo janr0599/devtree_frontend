@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
 import { social } from "../data/social.ts";
 import DevTreeInput from "../components/DevTreeInput.tsx";
-import { DevTreeLink, User } from "../types/index.ts";
+import { DevTreeLink, SocialNetwork, User } from "../types/index.ts";
 import { isValidUrl } from "../utils/index.ts";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { uploadSocialLinks } from "../api/DevTreeApi.ts";
 
 function LinkTreeView() {
-    const [devTreeLinks, setDevTreeLinks] = useState(social);
+    const [devTreeLinks, setDevTreeLinks] = useState<DevTreeLink[]>(social);
 
     const queryClient = useQueryClient();
     const user = queryClient.getQueryData<User>(["user"])!;
@@ -16,7 +16,7 @@ function LinkTreeView() {
     useEffect(() => {
         const updatedData = devTreeLinks.map((item) => {
             const userLink = JSON.parse(user.links).find(
-                (link: DevTreeLink) => link.name === item.name
+                (link: SocialNetwork) => link.name === item.name
             );
 
             if (userLink) {
