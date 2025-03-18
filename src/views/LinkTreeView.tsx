@@ -132,7 +132,7 @@ function LinkTreeView() {
                 ))}
                 <button
                     className="bg-cyan-300 p-3 text-lg w-full uppercase text-slate-600 rounded-lg font-bold cursor-pointer hover:bg-cyan-400 transition-colors"
-                    onClick={() => mutate(user.links)}
+                    onClick={() => mutate(queryClient.getQueryData<User>(["user"])!.links)}
                 >
                     Guardar Cambios
                 </button>
