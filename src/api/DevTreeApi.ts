@@ -89,3 +89,21 @@ export const uploadSocialLinks = async (links: string) => {
     // return the received message
     return data.message;
 };
+
+export const getUserByHandle = async (handle: User['handle']) => {
+    try {
+        // Send the updated user data to the API
+        const { data } = await api<{ user: User }>(`/${handle}`);
+
+        // return the received message
+        return data.user;
+    } catch (error) {
+        // Handle Axios-specific errors
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+
+        // Handle any other unexpected errors
+        throw new Error("An unexpected error occurred");
+    }
+};
