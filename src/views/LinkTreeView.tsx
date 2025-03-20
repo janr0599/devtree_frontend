@@ -41,7 +41,7 @@ function LinkTreeView() {
         },
     });
 
-    const links : SocialNetwork[] = JSON.parse(user.links);
+  const links : SocialNetwork[] = JSON.parse(user.links);
 
   const handleEnableLink = (socialNetwork: string) => {
     const updatedLinks = devTreeLinks.map(link => {
@@ -58,6 +58,7 @@ function LinkTreeView() {
     setDevTreeLinks(updatedLinks)
 
     let updatedItems: SocialNetwork[] = []
+    
     const selectedSocialNetwork = updatedLinks.find(link => link.name === socialNetwork)
     if(selectedSocialNetwork?.enabled) {
       const id = links.filter(link => link.id).length + 1
