@@ -18,7 +18,7 @@ function DevTreeLink({ link }: DevTreeLinkProps) {
     }
 
     return (
-        <li style={style} {...attributes} {...listeners} ref={setNodeRef} className="bg-white px-5 py-2 flex items-center gap-5 rounded-lg">
+        <li style={style} {...attributes} {...listeners} ref={setNodeRef} className="bg-white px-5 py-2 flex items-center gap-5 rounded-lg text-black">
             <div
                 className="size-12 bg-cover"
                 style={{

@@ -25,6 +25,15 @@ export const userSchema = baseUserSchema.pick({
     links: true,
 });
 
+// Type for getUserByHandle function since API returns a user without email
+export const userHandleSchema = userSchema.pick({ 
+    name: true,
+    handle: true,
+    description: true,
+    image: true,
+    links: true,
+});
+
 export const registerSchema = baseUserSchema
     .pick({
         name: true,

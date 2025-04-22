@@ -1,5 +1,5 @@
 import { isAxiosError } from "axios";
-import type { ProfileForm, ProfilePicture, User } from "../types";
+import type { ProfileForm, ProfilePicture, User, UserHandle } from "../types";
 import api from "../config/axios";
 import { userSchema } from "../schemas";
 
@@ -93,7 +93,7 @@ export const uploadSocialLinks = async (links: string) => {
 export const getUserByHandle = async (handle: User['handle']) => {
     try {
         // Send the updated user data to the API
-        const { data } = await api<{ user: User }>(`/${handle}`);
+        const { data } = await api<{ user: UserHandle }>(`/${handle}`);
 
         // return the received message
         return data.user;
