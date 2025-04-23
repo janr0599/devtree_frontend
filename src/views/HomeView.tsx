@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import SearchForm from "../components/SearchForm";
 
 function HomeView() {
     return (
@@ -17,8 +18,10 @@ function HomeView() {
                         <p className="text-slate-800">
                             Únete a mas de 200 mil desarrolladores que ya usan
                             DevTree para compartir su perfil de Github, Tiktok,
-                            Facebook, Youtube, Tiwtch, Instagram y más
+                            Facebook, Youtube, Twitch, Instagram y más
                         </p>
+
+                        <SearchForm />
                     </div>
                 </div>
             </main>

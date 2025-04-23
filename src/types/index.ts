@@ -8,6 +8,7 @@ import {
     socialNetworkSchema,
     userSchema,
     userHandleSchema,
+    searchHandleSchema,
 } from "../schemas";
 
 export type User = z.infer<typeof userSchema>;
@@ -18,3 +19,4 @@ export type ProfileForm = z.infer<typeof profileSchema>;
 export type ProfilePicture = z.infer<typeof profilePictureSchema>;
 export type SocialNetwork = z.infer<typeof socialNetworkSchema>;
 export type DevTreeLink = z.infer<typeof devTreeLink>;
+export type searchHandleForm = z.infer<typeof searchHandleSchema>;

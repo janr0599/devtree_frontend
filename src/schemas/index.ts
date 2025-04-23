@@ -26,7 +26,7 @@ export const userSchema = baseUserSchema.pick({
 });
 
 // Type for getUserByHandle function since API returns a user without email
-export const userHandleSchema = userSchema.pick({ 
+export const userHandleSchema = userSchema.pick({
     name: true,
     handle: true,
     description: true,
@@ -82,4 +82,8 @@ export const devTreeLink = socialNetworkSchema.pick({
     name: true,
     url: true,
     enabled: true,
+});
+
+export const searchHandleSchema = baseUserSchema.pick({
+    handle: true,
 });
