@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
@@ -10,6 +10,7 @@ import { registerSchema } from "../../schemas";
 import { useLocation } from "react-router-dom";
 
 function RegisterView() {
+    const navigate = useNavigate();
     const location = useLocation();
     const handle = location.state?.handle || "";
 
@@ -39,6 +40,9 @@ function RegisterView() {
             );
             toast.success(data.message);
             reset();
+            navigate("/auth/login", {
+                state: { email: formData.email },
+            });
         } catch (error) {
             console.log(error);
             if (isAxiosError(error)) {

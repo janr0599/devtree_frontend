@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
@@ -9,8 +9,12 @@ import api from "../../config/axios";
 import { loginSchema } from "../../schemas";
 
 function LoginView() {
+    const location = useLocation();
+    const email = location.state?.email || "";
+    const navigate = useNavigate();
+
     const defaultValues: LoginForm = {
-        email: "",
+        email,
         password: "",
     };
 
@@ -30,6 +34,7 @@ function LoginView() {
                 formData
             );
             localStorage.setItem("AUTH_TOKEN_DEVTREE", data.token);
+            navigate("/admin");
         } catch (error) {
             console.log(error);
             if (isAxiosError(error)) {

@@ -1,11 +1,5 @@
 import { isAxiosError } from "axios";
-import type {
-    ProfileForm,
-    ProfilePicture,
-    searchHandleForm,
-    User,
-    UserHandle,
-} from "../types";
+import type { ProfileForm, ProfilePicture, User, UserHandle } from "../types";
 import api from "../config/axios";
 import { userSchema } from "../schemas";
 
