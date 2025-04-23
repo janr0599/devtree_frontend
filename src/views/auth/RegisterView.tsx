@@ -7,12 +7,16 @@ import ErrorMessage from "../../components/ErrorMessage";
 import type { RegisterForm } from "../../types";
 import api from "../../config/axios";
 import { registerSchema } from "../../schemas";
+import { useLocation } from "react-router-dom";
 
 function RegisterView() {
+    const location = useLocation();
+    const handle = location.state?.handle || "";
+
     const defaultValues: RegisterForm = {
         name: "",
         email: "",
-        handle: "",
+        handle,
         password: "",
         password_confirmation: "",
     };
@@ -50,7 +54,7 @@ function RegisterView() {
             <form
                 noValidate
                 onSubmit={handleSubmit(handleRegister)}
-                className="bg-white px-5 py-10 rounded-lg space-y-10 mt-10"
+                className="bg-white px-5 py-10 rounded-lg space-y-5 mt-10"
             >
                 <div className="grid grid-cols-1 space-y-3">
                     <label

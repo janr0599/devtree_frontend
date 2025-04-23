@@ -1,5 +1,11 @@
 import { isAxiosError } from "axios";
-import type { ProfileForm, ProfilePicture, User, UserHandle } from "../types";
+import type {
+    ProfileForm,
+    ProfilePicture,
+    searchHandleForm,
+    User,
+    UserHandle,
+} from "../types";
 import api from "../config/axios";
 import { userSchema } from "../schemas";
 
@@ -90,13 +96,32 @@ export const uploadSocialLinks = async (links: string) => {
     return data.message;
 };
 
-export const getUserByHandle = async (handle: User['handle']) => {
+export const getUserByHandle = async (handle: User["handle"]) => {
     try {
         // Send the updated user data to the API
         const { data } = await api<{ user: UserHandle }>(`/${handle}`);
 
         // return the received message
         return data.user;
+    } catch (error) {
+        // Handle Axios-specific errors
+        if (isAxiosError(error) && error.response) {
+            throw new Error(error.response.data.error);
+        }
+
+        // Handle any other unexpected errors
+        throw new Error("An unexpected error occurred");
+    }
+};
+
+export const checkHandleAvailability = async (handle: string) => {
+    try {
+        const { data } = await api.post<{ message: string }>("/check-handle", {
+            handle,
+        });
+
+        // return the received message
+        return data.message;
     } catch (error) {
         // Handle Axios-specific errors
         if (isAxiosError(error) && error.response) {

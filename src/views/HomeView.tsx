@@ -1,3 +1,4 @@
+import { Toaster } from "sonner";
 import Header from "../components/Header";
 import SearchForm from "../components/SearchForm";
 
@@ -25,6 +26,7 @@ function HomeView() {
                     </div>
                 </div>
             </main>
+            <Toaster richColors />
         </>
     );
 }
